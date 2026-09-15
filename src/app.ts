@@ -11,6 +11,22 @@ const noteSchema = new Schema({
 
 const Note = model("Note", noteSchema);
 
+app.post("/create-note", (req: Request, res: Response) => {
+	try {
+		const myNote = new Note({
+			title: "My note title",
+			content: "My note content will go here!",
+		});
+
+		res.json({
+			success: true,
+			note: myNote,
+		});
+	} catch (error: any) {
+		console.log(error.message);
+	}
+});
+
 app.get("/", (req: Request, res: Response) => {
 	res.json({
 		success: true,
