@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage / Testing
+coverage/
+.nyc_output/
+
+# MongoDB local data (if you run mongod locally with a data dir)
+data/
+*.mongodb
+
+# Optional cache directories
+.npm/
+.eslintcache
+
+# PM2 / process files
+.pm2/
+
+# Package manager lock conflicts (keep only one you actually use)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
