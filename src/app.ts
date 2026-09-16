@@ -2,22 +2,26 @@ import express from "express";
 import type { Application, Request, Response } from "express";
 import "dotenv/config";
 import { model, Schema } from "mongoose";
+
 const app: Application = express();
 app.use(express.json());
+
 const noteSchema = new Schema({
-	title: String,
+	title: { type: String, required: true, trim: true },
 	content: String,
 });
 
 const Note = model("Note", noteSchema);
 
-app.post("/create-note", (req: Request, res: Response) => {
+app.post("/create-note", async (req: Request, res: Response) => {
 	try {
 		const { title, content } = req.body;
 		const myNote = new Note({
 			title,
 			content,
 		});
+
+		await myNote.save();
 
 		res.json({
 			success: true,
