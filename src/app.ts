@@ -50,6 +50,16 @@ app.get("/notes", async (req, res) => {
 	});
 });
 
+app.get("/notes/:noteId", async (req, res) => {
+	const noteId = req.params.noteId;
+	const notes = await Note.findById(noteId);
+
+	res.status(200).json({
+		success: true,
+		notes,
+	});
+});
+
 app.get("/", (req: Request, res: Response) => {
 	res.json({
 		success: true,
