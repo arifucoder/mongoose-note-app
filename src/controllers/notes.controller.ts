@@ -14,6 +14,10 @@ noteRoutes.post("/create-note", async (req: Request, res: Response) => {
 		});
 	} catch (error: any) {
 		console.log(error.message);
+		res.status(400).json({
+			success: false,
+			message: error.message,
+		});
 	}
 });
 
