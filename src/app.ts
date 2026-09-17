@@ -6,24 +6,30 @@ import { model, now, Schema } from "mongoose";
 const app: Application = express();
 app.use(express.json());
 
-const noteSchema = new Schema({
-	title: { type: String, required: true, trim: true },
-	content: { type: String, default: "" },
-	category: {
-		type: String,
-		enum: ["Personal", "Work", "Other"],
-		default: "Personal",
+const noteSchema = new Schema(
+	{
+		title: { type: String, required: true, trim: true },
+		content: { type: String, default: "" },
+		category: {
+			type: String,
+			enum: ["Personal", "Work", "Other"],
+			default: "Personal",
+		},
+		pinned: {
+			type: Boolean,
+			default: false,
+		},
+		date: { type: Date, default: Date.now },
+		tags: {
+			label: { type: String, required: true },
+			color: { type: String, default: "green" },
+		},
 	},
-	pinned: {
-		type: Boolean,
-		default: false,
+	{
+		versionKey: false,
+		timestamps: true,
 	},
-	date: { type: Date, default: Date.now },
-	tags: {
-		label: { type: String, required: true },
-		color: { type: String, default: "green" },
-	},
-});
+);
 
 const Note = model("Note", noteSchema);
 
@@ -57,6 +63,29 @@ app.get("/notes/:noteId", async (req, res) => {
 	res.status(200).json({
 		success: true,
 		notes,
+	});
+});
+
+app.patch("/notes/:noteId", async (req, res) => {
+	const noteId = req.params.noteId;
+	const updatedBody = req.body;
+	const notes = await Note.findByIdAndUpdate(noteId, updatedBody, { new: true });
+
+	res.status(200).json({
+		success: true,
+		message: "Note updated successfully",
+		notes,
+	});
+});
+
+app.delete("/notes/:noteId", async (req, res) => {
+	const noteId = req.params.noteId;
+	const deletedNotes = await Note.findByIdAndDelete(noteId);
+
+	res.status(200).json({
+		success: true,
+		message: "Note deleted successfully",
+		deletedNotes,
 	});
 });
 
