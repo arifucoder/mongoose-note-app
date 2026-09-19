@@ -25,6 +25,11 @@ userRoutes.post("/create-user", async (req: Request, res: Response) => {
 // Get all users
 userRoutes.get("/", async (req: Request, res: Response) => {
 	try {
+		// filtering using email
+		// const users = await User.find({
+		// 	email: "john.smith@example.com",
+		// });
+
 		const users = await User.find();
 
 		res.status(200).json({
